@@ -4,12 +4,12 @@
 require "json"
 
 total_workers = ENV.fetch("TEST_NODE_TOTAL", "1").to_i
-this_worker_number = ENV.fetch("TEST_NODE_INDEX", "1").to_i
+this_worker_index = ENV.fetch("TEST_NODE_INDEX", "1").to_i
 
 warn "TEST_NODE_TOTAL=#{total_workers}"
-warn "TEST_NODE_INDEX=#{this_worker_number}"
+warn "TEST_NODE_INDEX=#{this_worker_index}"
 
-raise "TEST_NODE_INDEX must be between 1 and TEST_NODE_TOTAL" unless (1..total_workers).cover?(this_worker_number)
+raise "TEST_NODE_INDEX must be between 1 and TEST_NODE_TOTAL" unless (1..total_workers).cover?(this_worker_index)
 
 # Load the examples from the JSON file
 if ARGV[0]
