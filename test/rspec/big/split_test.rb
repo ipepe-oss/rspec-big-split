@@ -2,12 +2,16 @@
 
 require "test_helper"
 
-class Rspec::Big::SplitTest < Minitest::Test
-  def test_that_it_has_a_version_number
-    refute_nil ::Rspec::Big::Split::VERSION
-  end
+module Rspec
+  module Big
+    class SplitTest < Minitest::Test
+      def test_that_it_has_a_version_number
+        refute_nil ::Rspec::Big::Split::VERSION
+      end
 
-  def test_it_does_something_useful
-    assert false
+      def test_it_does_something_useful
+        assert false
+      end
+    end
   end
 end

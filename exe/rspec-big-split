@@ -11,34 +11,35 @@ warn "TEST_NODE_INDEX=#{this_worker_number}"
 
 raise "TEST_NODE_INDEX must be between 1 and TEST_NODE_TOTAL" unless (1..total_workers).cover?(this_worker_number)
 
-this_worker_number -= 1
-
 # Load the examples from the JSON file
 if ARGV[0]
   path = ARGV[0]
-  examples = JSON.parse(File.read(path))["examples"]
+  all_rspec_examples = JSON.parse(File.read(path))["examples"]
 
-  # Filter out examples that are not in this worker's test files
+  example_paths = {}
 
-  examples_to_run = examples.map do |example|
+  all_rspec_examples.map do |example|
     if example["ci_split_example_groups"]
-      example["example_group_id"]
+      example_paths[example["id"]] ||= []
+      example_paths[example["id"]].push example["id"]
     else
-      example["file_path"]
+      example_paths[example["file_path"]] ||= []
+      example_paths[example["file_path"]].push example["id"]
     end
   end
-  examples_to_run = examples_to_run.uniq.sort
 
   # Split the examples into groups
   examples_to_run_for_current_worker = []
-  examples_to_run.each_with_index do |example, index|
-    examples_to_run_for_current_worker.push(example) if (index % total_workers) == this_worker_number
+  example_paths.keys.sort.each_with_index do |example, index|
+    next unless index % total_workers == this_worker_index
+
+    examples_to_run_for_current_worker.concat(
+      example_paths[example]
+    )
   end
-  warn(
-    "Running #{examples_to_run_for_current_worker.size}/#{examples_to_run.size}" \
-      " examples on worker #{this_worker_number}"
-  )
-  puts examples_to_run_for_current_worker
+  warn "Suggesting #{examples_to_run_for_current_worker.size}/#{example_paths.size} examples on worker #{this_worker_index}"
+  warn examples_to_run_for_current_worker.join(" ")
+  $stdout.puts examples_to_run_for_current_worker
 else
   warn "Usage: rspec-big-split <path to JSON file>"
   exit 1

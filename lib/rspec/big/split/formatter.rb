@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "rspec/core/formatters/json_formatter"
 
 module Rspec
@@ -9,12 +11,11 @@ module Rspec
         private
 
         def format_example(example)
-          original = super
           {
             id: example.id,
             ci_split_example_groups: example.metadata[:ci_split_example_groups],
             example_group_id: example.example_group.id
-          }.merge(original.slice(:file_path))
+          }.merge(super.slice(:file_path))
         end
       end
     end
