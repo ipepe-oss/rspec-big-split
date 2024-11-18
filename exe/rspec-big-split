@@ -10,7 +10,8 @@ warn "TEST_NODE_TOTAL=#{total_workers}"
 warn "TEST_NODE_INDEX=#{this_worker_number}"
 
 raise "TEST_NODE_INDEX must be between 1 and TEST_NODE_TOTAL" unless (1..total_workers).cover?(this_worker_number)
-this_worker_number = this_worker_number - 1
+
+this_worker_number -= 1
 
 # Load the examples from the JSON file
 if ARGV[0]
@@ -31,7 +32,7 @@ if ARGV[0]
   # Split the examples into groups
   examples_to_run_for_current_worker = []
   examples_to_run.each_with_index do |example, index|
-    examples_to_run_for_current_worker.push(example) if index % total_workers == this_worker_number
+    examples_to_run_for_current_worker.push(example) if (index % total_workers) == this_worker_number
   end
   warn(
     "Running #{examples_to_run_for_current_worker.size}/#{examples_to_run.size}" \
