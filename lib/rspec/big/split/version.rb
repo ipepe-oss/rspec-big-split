@@ -3,7 +3,7 @@
 module Rspec
   module Big
     module Split
-      VERSION = "0.2.6"
+      VERSION = "0.2.7"
     end
   end
 end
