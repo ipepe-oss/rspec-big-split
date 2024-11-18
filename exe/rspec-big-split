@@ -1,0 +1,38 @@
+#!/bin/env ruby
+# frozen_string_literal: true
+
+require "json"
+
+total_workers = ENV.fetch("TEST_NODE_TOTAL", "1").to_i
+this_worker_number = ENV.fetch("TEST_NODE_INDEX", "0").to_i
+
+# Load the examples from the JSON file
+if ARGV[0]
+  path = ARGV[0]
+  examples = JSON.parse(File.read(path))["examples"]
+
+  # Filter out examples that are not in this worker's test files
+
+  examples_to_run = examples.map do |example|
+    if example["ci_split_example_groups"]
+      example["example_group_id"]
+    else
+      example["file_path"]
+    end
+  end
+  examples_to_run = examples_to_run.uniq.sort
+
+  # Split the examples into groups
+  examples_to_run_for_current_worker = []
+  examples_to_run.each_with_index do |example, index|
+    examples_to_run_for_current_worker.push(example) if index % total_workers == this_worker_number
+  end
+  warn(
+    "Running #{examples_to_run_for_current_worker.size}/#{examples_to_run.size}" \
+      " examples on worker #{this_worker_number}"
+  )
+  puts examples_to_run_for_current_worker
+else
+  warn "Usage: rspec-big-split <path to JSON file>"
+  exit 1
+end
