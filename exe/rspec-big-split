@@ -19,7 +19,7 @@ if ARGV[0]
   example_paths = {}
 
   all_rspec_examples.map do |example|
-    if example["ci_split_example_groups"]
+    if example["ci_split_example_groups"] || ARGV.include?("--split-by-example")
       example_paths[example["id"]] ||= []
       example_paths[example["id"]].push example["id"]
     else
