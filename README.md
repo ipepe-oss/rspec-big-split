@@ -23,7 +23,9 @@ bundle add rspec-big-split
 
 ### Options
 
-By default, this script splits tests by files into workers. If you want to split by examples, pass `--split-by-example`
+ * By default, this script splits tests by files into workers. If you want to split by examples, pass `--split-by-example`
+ * You can use `--add-one-on-test-node-index` to modify the index of the test node. This is useful when your CI starts indexing from `0` and you want to start from `1`.
+
 
 ## Example project
 
