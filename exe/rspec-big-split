@@ -31,7 +31,7 @@ if ARGV[0]
   # Split the examples into groups
   examples_to_run_for_current_worker = []
   example_paths.keys.sort.each_with_index do |example, index|
-    next unless index % total_workers == this_worker_index
+    next unless ((index % total_workers) - 1) == this_worker_index
 
     examples_to_run_for_current_worker.concat(
       example_paths[example]
