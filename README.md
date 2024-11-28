@@ -20,3 +20,7 @@ bundle add rspec-big-split
    * Make sure that your indexing starts with `1` and ends equal to `TEST_NODE_TOTAL`.
 4. (optional) Printout tests that will be run in current node: `bundle exec rspec-big-split tmp/rspec_splitter.json`
 5. Run tests with `bundle exec rspec $(bundle exec rspec-big-split tmp/rspec_splitter.json)` to run tests on each node.
+
+### Options
+
+By default, this script splits tests by files into workers. If you want to split by examples, pass `--split-by-example` 
