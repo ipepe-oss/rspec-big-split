@@ -39,7 +39,10 @@ if ARGV[0]
       example_paths[example]
     )
   end
-  warn "Suggesting #{examples_to_run_for_current_worker.size}/#{example_paths.size} examples on worker #{this_worker_index}"
+  warn(
+    "Suggesting #{examples_to_run_for_current_worker.size}/" \
+    "#{example_paths.size} examples on worker #{this_worker_index}"
+  )
   $stdout.puts examples_to_run_for_current_worker
 else
   warn "Usage: rspec-big-split <path to JSON file>"

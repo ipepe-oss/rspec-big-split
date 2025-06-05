@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
+require "rspec/core"
 require "rspec/core/formatters/json_formatter"
 
 module Rspec
   module Big
     module Split
+      # Formatter outputs JSON with extra metadata used by rspec-big-split.
       class Formatter < ::RSpec::Core::Formatters::JsonFormatter
         ::RSpec::Core::Formatters.register self
 
