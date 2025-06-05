@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Split one big RSpec test file into many smaller ones for parallel execution"
   spec.homepage      = "https://github.com/ipepe-oss/rspec-big-split"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.1.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 2.4.0")
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
