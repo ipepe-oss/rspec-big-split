@@ -16,7 +16,7 @@ bundle add rspec-big-split
 2. Generate tests map with: `bundle exec rspec --dry-run --format Rspec::Big::Split::Formatter --out tmp/rspec_splitter.json`
 3. Define variables like `TEST_NODE_TOTAL=20` and `TEST_NODE_INDEX=1` in your CI/CD configuration.
    * Make sure that your indexing starts with `1` and ends equal to `TEST_NODE_TOTAL`.
-4. (optional) Printout tests that will be run in current node: `bundle exec rspec-big-split tmp/rspec_splitter.json`
+4. (optional) Print out the tests that will be run on the current node: `bundle exec rspec-big-split tmp/rspec_splitter.json`
 5. Run tests with `bundle exec rspec $(bundle exec rspec-big-split tmp/rspec_splitter.json)` to run tests on each node.
 
 ### Options
